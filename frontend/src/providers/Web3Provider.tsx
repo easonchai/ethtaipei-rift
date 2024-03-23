@@ -23,6 +23,7 @@ const config = createConfig(
 
     // Optional App Info
     appDescription: "World's first instant, gassless cross-chain bridge",
+    ssr: true,
   })
 );
 
