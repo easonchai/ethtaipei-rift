@@ -113,3 +113,18 @@ button {
   border-radius: 0;
   border: 1px solid black;
 }
+
+.scrollbar1::-webkit-scrollbar {
+  width: 16px;
+}
+
+.scrollbar1::-webkit-scrollbar-track {
+  background-color: #ffe4f4;
+  border-left: 2px solid #141400;
+  padding: 2px;
+}
+
+.scrollbar1::-webkit-scrollbar-thumb {
+  border: 1px solid #141400;
+  background-color: #f5acfe;
+}

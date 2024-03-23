@@ -36,6 +36,9 @@ const config: Config = {
           },
         },
       },
+      dropShadow: {
+        rift: "4px 4px 0px #141400",
+      },
     },
   },
   plugins: [],
