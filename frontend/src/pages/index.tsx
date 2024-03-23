@@ -2,12 +2,17 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import Dropdown from "@/components/Dropdown";
+import { useState } from "react";
+import { parseOption } from "@/utils/formatting";
 
 const Snake = dynamic(() => import("@/components/Snake"), {
   ssr: false,
 });
 
 export default function Home() {
+  const [sendAmount, setSendAmount] = useState("0");
+  const [receiveAmount, setReceiveAmount] = useState("0");
+  const [sendAsset, setSendAsset] = useState("USDT");
   return (
     <main className="flex min-h-screen flex-col items-center px-4 lg:px-24 gap-y-10 py-2 bg-cover bg-center object-fill text-rift-grey-900">
       <div className="flex flex-row w-full items-center">
@@ -25,7 +30,7 @@ export default function Home() {
       </div>
       <div className="flex flex-row items-start justify-center gap-5 w-full">
         <div className="border-2 border-rift-grey-900 flex-1 flex flex-col max-w-[572px]">
-          <div className="h-8 w-full flex flex-row px-2 py-5 items-end gap-x-4 bg-rift-yellow-2 border-b-2 border-rift-grey-900">
+          <div className="h-8 w-full flex flex-row px-5 py-2 justify-end gap-x-4 bg-rift-yellow-2 border-b-2 border-rift-grey-900">
             <Image
               src="/assets/window-icons/hide.svg"
               alt="Minimize"
@@ -49,7 +54,10 @@ export default function Home() {
           <div className="flex flex-col px-5 py-3 bg-rift-yellow-1 gap-y-3 border-b-2 border-rift-grey-900">
             <div className="flex flex-row w-full items-center">
               <p className="font-bold mr-3">SEND</p>
-              <Dropdown options={["USDT", "USDC", "ETH", "BTC", "BNB"]} />
+              <Dropdown
+                options={["USDT", "USDC", "ETH", "BTC", "BNB"]}
+                setOption={setSendAsset}
+              />
             </div>
             <div className="flex flex-row w-full items-center">
               <p className="font-bold mr-3">FROM</p>
@@ -65,6 +73,28 @@ export default function Home() {
                   "Ten Protocol",
                 ]}
               />
+            </div>
+            <div className="flex flex-col w-full border-2 border-rift-grey-900 rounded-sm px-4 py-3 pb-0 bg-white">
+              <div className="flex flex-row items-center justify-between">
+                <p>Send:</p>
+                <div className="flex flex-row border border-rift-grey-900 rounded-sm h-[29px] bg-white">
+                  <p className="flex items-center justify-center w-[50px] cursor-pointer hover:bg-rift-grey-500">
+                    25%
+                  </p>
+                  <p className="flex items-center justify-center w-[50px] cursor-pointer hover:bg-rift-grey-500 border-l border-r border-rift-grey-900">
+                    50%
+                  </p>
+                  <p className="flex items-center justify-center w-[50px] cursor-pointer hover:bg-rift-grey-500">
+                    MAX
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-row w-full items-end justify-between">
+                <span className="font-bold text-[44px]">{sendAmount}</span>
+                <div className="flex flex-grow-0 transform -translate-y-4">
+                  {parseOption(sendAsset)}
+                </div>
+              </div>
             </div>
             <div className="flex w-full items-center justify-center relative h-10">
               <Image src={"/assets/bridge.svg"} alt="" fill />
@@ -84,11 +114,22 @@ export default function Home() {
                 ]}
               />
             </div>
+            <div className="flex flex-col w-full border-2 border-rift-grey-900 rounded-sm px-4 py-3 pb-0 bg-white">
+              <div className="flex flex-row items-center justify-between">
+                <p>Received (Estimated best price):</p>
+              </div>
+              <div className="flex flex-row w-full items-end justify-between">
+                <span className="font-bold text-[44px]">{receiveAmount}</span>
+                <div className="flex flex-grow-0 transform -translate-y-4">
+                  {parseOption(sendAsset)}
+                </div>
+              </div>
+            </div>
           </div>
           <div className="h-8 w-full flex flex-row bg-rift-yellow-3 border-b-2 border-rift-grey-900"></div>
         </div>
         <div className="border-2 border-rift-grey-900 flex-1 flex flex-col max-w-[572px]">
-          <div className="h-8 w-full flex flex-row px-2 py-5 items-end gap-x-4 bg-rift-purple-2 border-b-2 border-rift-grey-900">
+          <div className="h-8 w-full flex flex-row px-5 py-2 justify-end gap-x-4 bg-rift-purple-2 border-b-2 border-rift-grey-900">
             <Image
               src="/assets/window-icons/hide.svg"
               alt="Minimize"
