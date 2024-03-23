@@ -22,7 +22,7 @@ export default function Dropdown({
     switch (option) {
       case "USDT":
         return (
-          <p className="flex flex-row gap-x-3">
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
             <Image
               src="/assets/tokens/usdt.png"
               width={24}
@@ -34,7 +34,7 @@ export default function Dropdown({
         );
       case "USDC":
         return (
-          <p className="flex flex-row gap-x-3">
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
             <Image
               src="/assets/tokens/usdc.png"
               width={24}
@@ -46,7 +46,7 @@ export default function Dropdown({
         );
       case "ETH":
         return (
-          <p className="flex flex-row gap-x-3">
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
             <Image
               src="/assets/tokens/eth.png"
               width={24}
@@ -58,7 +58,7 @@ export default function Dropdown({
         );
       case "BTC":
         return (
-          <p className="flex flex-row gap-x-3">
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
             <Image
               src="/assets/tokens/btc.png"
               width={24}
@@ -70,7 +70,7 @@ export default function Dropdown({
         );
       case "BNB":
         return (
-          <p className="flex flex-row gap-x-3">
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
             <Image
               src="/assets/tokens/bnb.png"
               width={24}
@@ -82,9 +82,9 @@ export default function Dropdown({
         );
       case "Ethereum Mainnet":
         return (
-          <p className="flex flex-row gap-x-3">
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
             <Image
-              src="/assets/tokens/eth.png"
+              src="/assets/chains/eth.png"
               width={24}
               height={24}
               alt="Ethereum Mainnet"
@@ -92,8 +92,96 @@ export default function Dropdown({
             {option}
           </p>
         );
+      case "Linea":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/linea.png"
+              width={24}
+              height={24}
+              alt="Linea"
+            />
+            {option}
+          </p>
+        );
+      case "Optimism":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/optimism.png"
+              width={24}
+              height={24}
+              alt="Optimism"
+            />
+            {option}
+          </p>
+        );
+      case "Polygon zkEVM":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/polygon.png"
+              width={24}
+              height={24}
+              alt="Polygon zkEVM"
+            />
+            {option}
+          </p>
+        );
+      case "Scroll":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/scroll.png"
+              width={24}
+              height={24}
+              alt="Scroll"
+            />
+            {option}
+          </p>
+        );
+      case "ThunderCore":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/thundercore.png"
+              width={24}
+              height={24}
+              alt="ThunderCore"
+            />
+            {option}
+          </p>
+        );
+      case "Zircuit":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/zircuit.png"
+              width={24}
+              height={24}
+              alt="Zircuit"
+            />
+            {option}
+          </p>
+        );
+      case "Ten Protocol":
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            <Image
+              src="/assets/chains/ten.png"
+              width={24}
+              height={24}
+              alt="Ten Protocol"
+            />
+            {option}
+          </p>
+        );
       default:
-        return <p className="flex flex-row gap-x-3">{option}</p>;
+        return (
+          <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max">
+            {option}
+          </p>
+        );
     }
   };
 
@@ -101,7 +189,7 @@ export default function Dropdown({
     <div className="relative">
       <button
         className={clsx(
-          "flex flex-row items-center justify-between px-2 py-1 w-40 bg-white border-2 border-rift-grey-900 m-0",
+          "flex flex-row items-center justify-between px-2 py-1 gap-x-3 bg-white border-2 border-rift-grey-900 m-0",
           className
         )}
         onClick={() => setIsOpen(!isOpen)}
@@ -115,12 +203,12 @@ export default function Dropdown({
         />
       </button>
       {isOpen ? (
-        <div className="flex flex-col absolute transform translate-x-[159px] top-0 z-[999]">
+        <div className="flex flex-col absolute transform translate-x-[100%] right-0 top-0 z-[999]">
           {options.map((option) => (
             <button
               key={option}
               className={clsx(
-                "flex flex-row items-center justify-between px-2 py-1 w-40 bg-white border-2 border-rift-grey-900 m-0 hover:bg-rift-grey-500",
+                "flex flex-row items-center justify-between px-2 py-1 gap-x-3 w-full bg-white border-2 border-rift-grey-900 m-0 hover:bg-rift-grey-500 flex-nowrap",
                 selectedOption === option && "bg-rift-purple-1"
               )}
               onClick={() => {

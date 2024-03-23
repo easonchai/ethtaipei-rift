@@ -48,8 +48,23 @@ export default function Home() {
           </div>
           <div className="flex flex-col px-5 py-3 bg-rift-yellow-1 gap-y-3 border-b-2 border-rift-grey-900">
             <div className="flex flex-row w-full items-center">
-              <p className="font-bold mr-3">Send</p>
+              <p className="font-bold mr-3">SEND</p>
               <Dropdown options={["USDT", "USDC", "ETH", "BTC", "BNB"]} />
+            </div>
+            <div className="flex flex-row w-full items-center">
+              <p className="font-bold mr-3">FROM</p>
+              <Dropdown
+                options={[
+                  "Ethereum Mainnet",
+                  "Linea",
+                  "Optimism",
+                  "Polygon zkEVM",
+                  "Scroll",
+                  "ThunderCore",
+                  "Zircuit",
+                  "Ten Protocol",
+                ]}
+              />
             </div>
           </div>
           <div className="h-8 w-full flex flex-row bg-rift-yellow-3 border-b-2 border-rift-grey-900"></div>
