@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User request for bridge
+model BridgeRequest {
+  id                      String                  @id @default(uuid())
+  sender                  String
+  receiver                String
+  sourceChain             String
+  destinationChain        String
+  sourceTokenAddress      String
+  destinationTokenAddress String
+  sendAmount              String
+  fulfilmmentRequest      FulfilmentRequest?
+  providerResponses       BridgeRequestProvider[]
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  deletedAt               DateTime?
+}
+
+// Provider's response to the user request
+model BridgeRequestProvider {
+  id               String        @id @default(uuid())
+  providerAddress  String
+  bridgeRequestId  String
+  bridgeRequest    BridgeRequest @relation(fields: [bridgeRequestId], references: [id])
+  fulfilmentAmount String // Amount to be sent to the user
+  sla              Int
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  deletedAt        DateTime?
+}
+
+// User request for fulfilment
+model FulfilmentRequest {
+  id                  String           @id @default(uuid())
+  bridgeRequestId     String           @unique
+  bridgeRequest       BridgeRequest    @relation(fields: [bridgeRequestId], references: [id])
+  providerAddress     String
+  agreedReceiveAmount String
+  signature           String
+  proof               FulfilmentProof?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  deletedAt           DateTime?
+}
+
+// Fulfilment proof sent back from the providers
+model FulfilmentProof {
+  id              String            @id @default(uuid())
+  transactionHash String
+  requestId       String            @unique
+  request         FulfilmentRequest @relation(fields: [requestId], references: [id])
+  attestation     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+}
