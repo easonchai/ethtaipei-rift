@@ -292,8 +292,13 @@ const Snake: React.FC<Props> = (props) => {
           </div>
         )}
       </div>
-      <div className="point-bar" style={{ width: dim }}>
-        <div style={{ color: props.color2 }}>Score: {points}</div>
+      <div
+        className="w-full items-center justify-center"
+        style={{ width: dim }}
+      >
+        <div style={{ color: props.color2 }} className="mt-2">
+          SCORE: {points}
+        </div>
       </div>
       {width <= 1024 && (
         <div

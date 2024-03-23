@@ -1,16 +1,12 @@
 import Button from "@/components/Button";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import Dropdown from "@/components/Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { parseOption } from "@/utils/formatting";
 import RadioGroup from "@/components/RadioGroup";
 import { ConnectWallet } from "@/components/ConnectButton";
 import Head from "next/head";
-
-const Snake = dynamic(() => import("@/components/Snake"), {
-  ssr: false,
-});
+import Modal from "@/components/Modal";
 
 const networks = [
   "Ethereum Mainnet",
@@ -71,7 +67,20 @@ export default function Home() {
   ]);
   const [sourceChain, setSourceChain] = useState(networks[0]);
   const [destinationChain, setDestinationChain] = useState(networks[1]);
-  const [selectedProvider, setSelectedProvider] = useState(providers[0].name);
+  const [selectedProvider, setSelectedProvider] = useState<string>();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const generateProviders = () => {};
+
+  const bridge = () => {
+    setIsOpen(true);
+  };
+
+  useEffect(() => {
+    if (providers) {
+      setSelectedProvider(providers[0].name);
+    }
+  }, [providers]);
 
   return (
     <>
@@ -248,9 +257,10 @@ export default function Home() {
           </div>
         </div>
 
-        <Button disabled>Bridge</Button>
-
-        {/* <Snake color1="#000000" color2="#000000" backgroundColor="#FFFFFF" /> */}
+        <Button disabled={!!selectedProvider} onClick={bridge}>
+          Bridge
+        </Button>
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen} time={3} />
       </main>
     </>
   );

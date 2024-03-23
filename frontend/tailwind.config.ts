@@ -29,6 +29,11 @@ const config: Config = {
             2: "#F5ACFE",
             3: "#C69FFF",
           },
+          blue: {
+            1: "#E5DFFF",
+            2: "#A1CCFF",
+            3: "#92DFF7",
+          },
           grey: {
             500: "#DFDFDF",
             700: "#848484",

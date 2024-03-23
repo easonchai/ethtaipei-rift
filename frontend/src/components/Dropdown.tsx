@@ -21,7 +21,6 @@ export default function Dropdown({
   setValue,
 }: IDropdown) {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="relative">
       <button
@@ -45,7 +44,7 @@ export default function Dropdown({
             <button
               key={option}
               className={clsx(
-                "flex flex-row items-center justify-between px-2 py-1 gap-x-3 w-full bg-white border-rift-grey-900 m-0 hover:bg-rift-grey-500 flex-nowrap",
+                "flex flex-row items-center justify-between px-2 py-1 gap-x-3 w-full min-w-max bg-white border-rift-grey-900 m-0 hover:bg-rift-grey-500 flex-nowrap",
                 index === options.length - 1 ? "" : "border-b-2",
                 value === option && "bg-rift-purple-1"
               )}
