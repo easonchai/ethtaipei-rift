@@ -10,6 +10,17 @@ const Snake = dynamic(() => import("@/components/Snake"), {
   ssr: false,
 });
 
+const networks = [
+  "Ethereum Mainnet",
+  "Linea",
+  "Optimism",
+  "Polygon zkEVM",
+  "Scroll",
+  "ThunderCore",
+  "Zircuit",
+  "Ten Protocol",
+];
+
 export default function Home() {
   const [sendAmount, setSendAmount] = useState("0");
   const [receiveAmount, setReceiveAmount] = useState("0");
@@ -56,7 +67,10 @@ export default function Home() {
       receiveAmount: 123,
     },
   ]);
+  const [sourceChain, setSourceChain] = useState(networks[0]);
+  const [destinationChain, setDestinationChain] = useState(networks[1]);
   const [selectedProvider, setSelectedProvider] = useState(providers[0].name);
+
   return (
     <main className="flex min-h-screen flex-col items-center px-4 lg:px-24 gap-y-10 py-2 bg-cover bg-center object-fill text-rift-grey-900">
       <div className="flex flex-row w-full items-center">
@@ -100,22 +114,16 @@ export default function Home() {
               <p className="font-bold mr-3">SEND</p>
               <Dropdown
                 options={["USDT", "USDC", "ETH", "BTC", "BNB"]}
-                setOption={setSendAsset}
+                value={sendAsset}
+                setValue={setSendAsset}
               />
             </div>
             <div className="flex flex-row w-full items-center">
               <p className="font-bold mr-3">FROM</p>
               <Dropdown
-                options={[
-                  "Ethereum Mainnet",
-                  "Linea",
-                  "Optimism",
-                  "Polygon zkEVM",
-                  "Scroll",
-                  "ThunderCore",
-                  "Zircuit",
-                  "Ten Protocol",
-                ]}
+                options={networks}
+                value={sourceChain}
+                setValue={setSourceChain}
               />
             </div>
             <div className="flex flex-col w-full border-2 border-rift-grey-900 rounded-sm px-4 py-3 pb-0 bg-white">
@@ -151,16 +159,9 @@ export default function Home() {
             <div className="flex flex-row w-full items-center">
               <p className="font-bold mr-3">TO</p>
               <Dropdown
-                options={[
-                  "Ethereum Mainnet",
-                  "Linea",
-                  "Optimism",
-                  "Polygon zkEVM",
-                  "Scroll",
-                  "ThunderCore",
-                  "Zircuit",
-                  "Ten Protocol",
-                ]}
+                options={networks}
+                value={destinationChain}
+                setValue={setDestinationChain}
               />
             </div>
             <div className="flex flex-col w-full border-2 border-rift-grey-900 rounded-sm px-4 py-3 pb-0 bg-white">
@@ -211,7 +212,11 @@ export default function Home() {
             <div className="flex flex-col w-full px-5 max-h-[400px] overflow-y-scroll overflow-x-hidden scrollbar1 gap-y-3">
               <div className="flex flex-row w-full items-center justify-end gap-x-3">
                 <p className="font-bold">SORT BY</p>
-                <Dropdown options={["BEST PRICE", "FASTEST"]} />
+                <Dropdown
+                  options={["BEST PRICE", "FASTEST"]}
+                  value="BEST PRICE"
+                  setValue={() => console.log("Wow")}
+                />
               </div>
               <RadioGroup
                 options={providers}

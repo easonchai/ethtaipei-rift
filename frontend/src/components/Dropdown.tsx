@@ -8,7 +8,8 @@ interface IDropdown {
   className?: string;
   disabled?: boolean;
   options: string[];
-  setOption?: Dispatch<SetStateAction<string>>;
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
 }
 
 export default function Dropdown({
@@ -16,14 +17,10 @@ export default function Dropdown({
   className,
   disabled,
   options,
-  setOption,
+  value,
+  setValue,
 }: IDropdown) {
-  const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (setOption) setOption(selectedOption);
-  }, [selectedOption]);
 
   return (
     <div className="relative">
@@ -34,7 +31,7 @@ export default function Dropdown({
         )}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {parseOption(selectedOption)}
+        {parseOption(value)}
         <Image
           src={"/assets/window-icons/dropdown.svg"}
           width={21}
@@ -43,16 +40,17 @@ export default function Dropdown({
         />
       </button>
       {isOpen ? (
-        <div className="flex flex-col absolute transform translate-x-[100%] right-0 top-0 z-[999]">
-          {options.map((option) => (
+        <div className="flex flex-col absolute transform translate-x-[100%] right-0 top-0 z-[999] border-2 border-rift-grey-900">
+          {options.map((option, index) => (
             <button
               key={option}
               className={clsx(
-                "flex flex-row items-center justify-between px-2 py-1 gap-x-3 w-full bg-white border-2 border-rift-grey-900 m-0 hover:bg-rift-grey-500 flex-nowrap",
-                selectedOption === option && "bg-rift-purple-1"
+                "flex flex-row items-center justify-between px-2 py-1 gap-x-3 w-full bg-white border-rift-grey-900 m-0 hover:bg-rift-grey-500 flex-nowrap",
+                index === options.length - 1 ? "" : "border-b-2",
+                value === option && "bg-rift-purple-1"
               )}
               onClick={() => {
-                setSelectedOption(option);
+                setValue(option);
                 setIsOpen(false);
               }}
             >
