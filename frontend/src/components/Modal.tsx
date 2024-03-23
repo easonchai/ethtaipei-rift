@@ -103,10 +103,10 @@ function Modal({
                     Once the countdown ends, the transaction should be
                     completed.
                   </p>
-                  {remainingTime ? (
+                  {remainingTime && remainingTime > 0 ? (
                     <p className="font-bold text-[22px]">
                       {parseNumber(Math.floor(remainingTime / 60))}:
-                      {parseNumber(remainingTime % 60)}
+                      {parseNumber(Math.floor(remainingTime % 60))}
                     </p>
                   ) : (
                     <p>This is taking longer than usual...</p>

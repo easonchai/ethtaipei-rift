@@ -2,11 +2,13 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import Dropdown from "@/components/Dropdown";
 import { useEffect, useState } from "react";
-import { parseOption } from "@/utils/formatting";
+import { parseBigIntString, parseOption } from "@/utils/formatting";
 import RadioGroup from "@/components/RadioGroup";
 import { ConnectWallet } from "@/components/ConnectButton";
 import Head from "next/head";
 import Modal from "@/components/Modal";
+import { ethers } from "ethers";
+import { useDebounce } from "use-debounce";
 
 const networks = [
   "Ethereum Mainnet",
@@ -22,55 +24,75 @@ const networks = [
 export default function Home() {
   const [sendAmount, setSendAmount] = useState("0");
   const [receiveAmount, setReceiveAmount] = useState("0");
+  const [amount] = useDebounce(sendAmount, 1000);
   const [sendAsset, setSendAsset] = useState("USDT");
-  const [providers, setProviders] = useState([
+  const [providers, setProviders] = useState<
     {
-      name: "BitBuddy",
-      time: 10,
-      receiveAmount: 130,
-    },
-    {
-      name: "EtherElf",
-      time: 20,
-      receiveAmount: 110,
-    },
-    {
-      name: "NiftyNaut",
-      time: 21,
-      receiveAmount: 100,
-    },
-    {
-      name: "WebWiz",
-      time: 201,
-      receiveAmount: 10,
-    },
-    {
-      name: "ChainChamp",
-      time: 131,
-      receiveAmount: 120,
-    },
-    {
-      name: "DeFiDuke",
-      time: 123,
-      receiveAmount: 121,
-    },
-    {
-      name: "CryptoCub",
-      time: 1233,
-      receiveAmount: 122,
-    },
-    {
-      name: "DappDragon",
-      time: 1233,
-      receiveAmount: 123,
-    },
-  ]);
+      name: string;
+      time: number;
+      receiveAmount: string;
+    }[]
+  >();
   const [sourceChain, setSourceChain] = useState(networks[0]);
   const [destinationChain, setDestinationChain] = useState(networks[1]);
   const [selectedProvider, setSelectedProvider] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
 
-  const generateProviders = () => {};
+  const randomNumber = (min: number, max: number) => {
+    return Math.random() * (max - min) + min;
+  };
+
+  const generateProviders = () => {
+    const providers = [
+      "BitBuddy",
+      "EtherElf",
+      "NiftyNaut",
+      "WebWiz",
+      "ChainChamp",
+      "DeFiDuke",
+      "CryptoCub",
+      "DappDragon",
+    ];
+
+    const fees = {
+      ETH: {
+        min: 0.001,
+        max: 0.005,
+      },
+      USDT: {
+        min: 10,
+        max: 40,
+      },
+      USDC: {
+        min: 10,
+        max: 40,
+      },
+      BTC: {
+        min: 0.000078,
+        max: 0.00047,
+      },
+    };
+    const feeData = (fees as any)[sendAsset];
+
+    const data = [];
+    for (const provider of providers) {
+      const fee = randomNumber(feeData.min, feeData.max);
+      const sla = randomNumber(1, 300);
+      const quote = ethers.parseEther(amount) - ethers.parseEther(`${fee}`);
+      data.push({
+        name: provider,
+        time: sla,
+        receiveAmount: quote < 0 ? "0" : quote.toString(),
+      });
+    }
+
+    data.sort((a, b) => {
+      const diff = BigInt(b.receiveAmount) - BigInt(a.receiveAmount);
+      return diff > 0 ? 1 : diff < 0 ? -1 : 0;
+    });
+
+    setProviders(data);
+  };
 
   const bridge = () => {
     setIsOpen(true);
@@ -81,6 +103,21 @@ export default function Home() {
       setSelectedProvider(providers[0].name);
     }
   }, [providers]);
+
+  useEffect(() => {
+    if (selectedProvider && providers) {
+      const provider = providers.find((p) => p.name === selectedProvider);
+      if (provider) {
+        setReceiveAmount(provider.receiveAmount);
+      }
+    }
+  }, [selectedProvider, providers]);
+
+  useEffect(() => {
+    if (Number(amount) > 0) {
+      generateProviders();
+    }
+  }, [amount]);
 
   return (
     <>
@@ -188,7 +225,9 @@ export default function Home() {
                   <p>Received (Estimated best price):</p>
                 </div>
                 <div className="flex flex-row w-full items-end justify-between">
-                  <span className="font-bold text-[44px]">{receiveAmount}</span>
+                  <span className="font-bold text-[44px]">
+                    {parseBigIntString(receiveAmount)}
+                  </span>
                   <div className="flex flex-grow-0 transform -translate-y-4">
                     {parseOption(sendAsset)}
                   </div>
@@ -219,48 +258,59 @@ export default function Home() {
                 className="cursor-pointer"
               />
             </div>
-            <div className="flex flex-col bg-rift-purple-1 border-b-2 border-rift-grey-900 w-full">
-              <div className="flex flex-row items-end justify-end w-full h-4">
-                <Image
-                  src={"/assets/window-icons/up.svg"}
-                  width={16}
-                  height={16}
-                  alt="up"
-                />
-              </div>
-              <div className="flex flex-col w-full px-5 max-h-[400px] overflow-y-scroll overflow-x-hidden scrollbar1 gap-y-3">
-                <div className="flex flex-row w-full items-center justify-end gap-x-3">
-                  <p className="font-bold">SORT BY</p>
-                  <Dropdown
-                    options={["BEST PRICE", "FASTEST"]}
-                    value="BEST PRICE"
-                    setValue={() => console.log("Wow")}
+            {providers && providers.length > 0 && (
+              <div className="flex flex-col bg-rift-purple-1 border-b-2 border-rift-grey-900 w-full">
+                <div className="flex flex-row items-end justify-end w-full h-4">
+                  <Image
+                    src={"/assets/window-icons/up.svg"}
+                    width={16}
+                    height={16}
+                    alt="up"
                   />
                 </div>
-                <RadioGroup
-                  options={providers}
-                  asset={sendAsset}
-                  selectedProvider={selectedProvider}
-                  setSelectedProvider={setSelectedProvider}
-                />
+                <div className="flex flex-col w-full px-5 max-h-[400px] overflow-y-scroll overflow-x-hidden scrollbar1 gap-y-3">
+                  <div className="flex flex-row w-full items-center justify-end gap-x-3">
+                    <p className="font-bold">SORT BY</p>
+                    <Dropdown
+                      options={["BEST PRICE", "FASTEST"]}
+                      value="BEST PRICE"
+                      setValue={() => console.log("Wow")}
+                    />
+                  </div>
+                  <RadioGroup
+                    options={providers}
+                    asset={sendAsset}
+                    selectedProvider={selectedProvider}
+                    setSelectedProvider={setSelectedProvider}
+                  />
+                </div>
+                <div className="flex flex-row items-end justify-end w-full">
+                  <Image
+                    src={"/assets/window-icons/down.svg"}
+                    width={16}
+                    height={16}
+                    alt="down"
+                  />
+                </div>
               </div>
-              <div className="flex flex-row items-end justify-end w-full">
-                <Image
-                  src={"/assets/window-icons/down.svg"}
-                  width={16}
-                  height={16}
-                  alt="down"
-                />
-              </div>
-            </div>
+            )}
             <div className="h-8 w-full flex flex-row bg-rift-purple-3 border-b-2 border-rift-grey-900"></div>
           </div>
         </div>
 
-        <Button disabled={!!selectedProvider} onClick={bridge}>
+        <Button disabled={!receiveAmount} onClick={bridge}>
           Bridge
         </Button>
-        <Modal isOpen={isOpen} setIsOpen={setIsOpen} time={3} />
+        {isOpen && (
+          <Modal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            time={
+              providers?.find((provider) => provider.name === selectedProvider)
+                ?.time
+            }
+          />
+        )}
       </main>
     </>
   );
