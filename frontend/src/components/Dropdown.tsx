@@ -17,6 +17,86 @@ export default function Dropdown({
 }: IDropdown) {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
+
+  const parseOption = (option: string) => {
+    switch (option) {
+      case "USDT":
+        return (
+          <p className="flex flex-row gap-x-3">
+            <Image
+              src="/assets/tokens/usdt.png"
+              width={24}
+              height={24}
+              alt="USDT"
+            />
+            {option}
+          </p>
+        );
+      case "USDC":
+        return (
+          <p className="flex flex-row gap-x-3">
+            <Image
+              src="/assets/tokens/usdc.png"
+              width={24}
+              height={24}
+              alt="USDC"
+            />
+            {option}
+          </p>
+        );
+      case "ETH":
+        return (
+          <p className="flex flex-row gap-x-3">
+            <Image
+              src="/assets/tokens/eth.png"
+              width={24}
+              height={24}
+              alt="ETH"
+            />
+            {option}
+          </p>
+        );
+      case "BTC":
+        return (
+          <p className="flex flex-row gap-x-3">
+            <Image
+              src="/assets/tokens/btc.png"
+              width={24}
+              height={24}
+              alt="BTC"
+            />
+            {option}
+          </p>
+        );
+      case "BNB":
+        return (
+          <p className="flex flex-row gap-x-3">
+            <Image
+              src="/assets/tokens/bnb.png"
+              width={24}
+              height={24}
+              alt="BNB"
+            />
+            {option}
+          </p>
+        );
+      case "Ethereum Mainnet":
+        return (
+          <p className="flex flex-row gap-x-3">
+            <Image
+              src="/assets/tokens/eth.png"
+              width={24}
+              height={24}
+              alt="Ethereum Mainnet"
+            />
+            {option}
+          </p>
+        );
+      default:
+        return <p className="flex flex-row gap-x-3">{option}</p>;
+    }
+  };
+
   return (
     <div className="relative">
       <button
@@ -26,7 +106,7 @@ export default function Dropdown({
         )}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedOption}
+        {parseOption(selectedOption)}
         <Image
           src={"/assets/window-icons/dropdown.svg"}
           width={21}
@@ -40,12 +120,15 @@ export default function Dropdown({
             <button
               key={option}
               className={clsx(
-                "flex flex-row items-center justify-between px-2 py-1 w-40 bg-white border-2 border-rift-grey-900 m-0",
+                "flex flex-row items-center justify-between px-2 py-1 w-40 bg-white border-2 border-rift-grey-900 m-0 hover:bg-rift-grey-500",
                 selectedOption === option && "bg-rift-purple-1"
               )}
-              onClick={() => setSelectedOption(option)}
+              onClick={() => {
+                setSelectedOption(option);
+                setIsOpen(false);
+              }}
             >
-              {option}
+              {parseOption(option)}
             </button>
           ))}
         </div>
