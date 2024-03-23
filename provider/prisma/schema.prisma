@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AcceptedTokens {
+  id           String    @id @default(uuid())
+  tokenAddress String
+  chainId      String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  @@unique([tokenAddress, chainId])
+}
+
+model Rate {
+  id               String      @id @default(uuid())
+  fulfilmentAmount String      @unique
+  sla              Int
+  bridgeRequestId  String      @unique
+  fulfilment       Fulfilment?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  deletedAt        DateTime?
+}
+
+model Fulfilment {
+  id                  String    @id @default(uuid())
+  fulfilmentRequestId String    @unique
+  transactionHash     String
+  attestation         String
+  rateId              String    @unique
+  rate                Rate      @relation(fields: [rateId], references: [id])
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  deletedAt           DateTime?
+}
