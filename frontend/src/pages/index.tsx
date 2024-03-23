@@ -133,9 +133,14 @@ export default function Home() {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-row w-full items-end justify-between">
-                <span className="font-bold text-[44px]">{sendAmount}</span>
-                <div className="flex flex-grow-0 transform -translate-y-4">
+              <div className="flex flex-row w-full items-end justify-between relative">
+                <input
+                  className="font-bold text-[44px] w-max outline-none "
+                  type="text"
+                  value={sendAmount}
+                  onChange={(e) => setSendAmount(e.target.value)}
+                />
+                <div className="flex flex-grow-0 transform -translate-y-4 absolute right-0">
                   {parseOption(sendAsset)}
                 </div>
               </div>
