@@ -4,7 +4,7 @@ export const parseOption = (option: string) => {
   const asset = getAsset(option);
   return (
     <p className="flex flex-row gap-x-3 w-full flex-nowrap min-w-max font-bold">
-      <Image src={asset} width={24} height={24} alt={option} />
+      {asset && <Image src={asset} width={24} height={24} alt={option} />}
       {option}
     </p>
   );
@@ -39,6 +39,6 @@ export const getAsset = (option: string) => {
     case "Ten Protocol":
       return "/assets/chains/ten.png";
     default:
-      return "/assets/tokens/eth.png";
+      return null;
   }
 };

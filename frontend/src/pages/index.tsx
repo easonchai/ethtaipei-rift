@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Dropdown from "@/components/Dropdown";
 import { useState } from "react";
 import { parseOption } from "@/utils/formatting";
+import RadioGroup from "@/components/RadioGroup";
 
 const Snake = dynamic(() => import("@/components/Snake"), {
   ssr: false,
@@ -13,6 +14,49 @@ export default function Home() {
   const [sendAmount, setSendAmount] = useState("0");
   const [receiveAmount, setReceiveAmount] = useState("0");
   const [sendAsset, setSendAsset] = useState("USDT");
+  const [providers, setProviders] = useState([
+    {
+      name: "BitBuddy",
+      time: 10,
+      receiveAmount: 130,
+    },
+    {
+      name: "EtherElf",
+      time: 20,
+      receiveAmount: 110,
+    },
+    {
+      name: "NiftyNaut",
+      time: 21,
+      receiveAmount: 100,
+    },
+    {
+      name: "WebWiz",
+      time: 201,
+      receiveAmount: 10,
+    },
+    {
+      name: "ChainChamp",
+      time: 131,
+      receiveAmount: 120,
+    },
+    {
+      name: "DeFiDuke",
+      time: 123,
+      receiveAmount: 121,
+    },
+    {
+      name: "CryptoCub",
+      time: 1233,
+      receiveAmount: 122,
+    },
+    {
+      name: "DappDragon",
+      time: 1233,
+      receiveAmount: 123,
+    },
+  ]);
+  const [selectedProvider, setSelectedProvider] = useState(providers[0].name);
   return (
     <main className="flex min-h-screen flex-col items-center px-4 lg:px-24 gap-y-10 py-2 bg-cover bg-center object-fill text-rift-grey-900">
       <div className="flex flex-row w-full items-center">
@@ -159,11 +203,17 @@ export default function Home() {
                 alt="up"
               />
             </div>
-            <div className="flex flex-col w-full px-5 max-h-[400px] overflow-y-scroll overflow-x-hidden scrollbar1">
+            <div className="flex flex-col w-full px-5 max-h-[400px] overflow-y-scroll overflow-x-hidden scrollbar1 gap-y-3">
               <div className="flex flex-row w-full items-center justify-end gap-x-3">
                 <p className="font-bold">SORT BY</p>
                 <Dropdown options={["BEST PRICE", "FASTEST"]} />
               </div>
+              <RadioGroup
+                options={providers}
+                asset={sendAsset}
+                selectedProvider={selectedProvider}
+                setSelectedProvider={setSelectedProvider}
+              />
             </div>
             <div className="flex flex-row items-end justify-end w-full">
               <Image
