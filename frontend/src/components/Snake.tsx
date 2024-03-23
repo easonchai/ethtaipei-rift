@@ -154,6 +154,22 @@ const Snake: React.FC<Props> = (props) => {
             e.preventDefault();
             turn("left", "right");
             break;
+          case "KeyW":
+            e.preventDefault();
+            turn("up", "down");
+            break;
+          case "KeyD":
+            e.preventDefault();
+            turn("right", "left");
+            break;
+          case "KeyS":
+            e.preventDefault();
+            turn("down", "up");
+            break;
+          case "KeyA":
+            e.preventDefault();
+            turn("left", "right");
+            break;
         }
       };
       document.addEventListener("keydown", handleKeydown);
