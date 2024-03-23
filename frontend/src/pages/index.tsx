@@ -23,7 +23,7 @@ export default function Home() {
           <Button>Connect Wallet</Button>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-center gap-5 w-full">
+      <div className="flex flex-row items-start justify-center gap-5 w-full">
         <div className="border-2 border-rift-grey-900 flex-1 flex flex-col max-w-[572px]">
           <div className="h-8 w-full flex flex-row px-2 py-5 items-end gap-x-4 bg-rift-yellow-2 border-b-2 border-rift-grey-900">
             <Image
@@ -53,6 +53,24 @@ export default function Home() {
             </div>
             <div className="flex flex-row w-full items-center">
               <p className="font-bold mr-3">FROM</p>
+              <Dropdown
+                options={[
+                  "Ethereum Mainnet",
+                  "Linea",
+                  "Optimism",
+                  "Polygon zkEVM",
+                  "Scroll",
+                  "ThunderCore",
+                  "Zircuit",
+                  "Ten Protocol",
+                ]}
+              />
+            </div>
+            <div className="flex w-full items-center justify-center relative h-10">
+              <Image src={"/assets/bridge.svg"} alt="" fill />
+            </div>
+            <div className="flex flex-row w-full items-center">
+              <p className="font-bold mr-3">TO</p>
               <Dropdown
                 options={[
                   "Ethereum Mainnet",

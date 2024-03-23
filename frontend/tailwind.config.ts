@@ -38,6 +38,7 @@ const config: Config = {
       },
       dropShadow: {
         rift: "4px 4px 0px #141400",
+        "rift-disabled": "4px 4px 0px #848484",
       },
     },
   },
