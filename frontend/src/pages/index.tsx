@@ -5,6 +5,7 @@ import Dropdown from "@/components/Dropdown";
 import { useState } from "react";
 import { parseOption } from "@/utils/formatting";
 import RadioGroup from "@/components/RadioGroup";
+import { ConnectWallet } from "@/components/ConnectButton";
 
 const Snake = dynamic(() => import("@/components/Snake"), {
   ssr: false,
@@ -83,7 +84,7 @@ export default function Home() {
           className="flex-grow-0"
         />
         <div className="flex flex-1 flex-grow items-center flex-row justify-end">
-          <Button>Connect Wallet</Button>
+          <ConnectWallet />
         </div>
       </div>
       <div className="flex flex-row items-start justify-center gap-5 w-full">

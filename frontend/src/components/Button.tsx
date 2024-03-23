@@ -4,9 +4,15 @@ interface IButton {
   children: any;
   className?: string;
   disabled?: boolean;
+  onClick?: any;
 }
 
-export default function Button({ children, className, disabled }: IButton) {
+export default function Button({
+  children,
+  className,
+  disabled,
+  onClick,
+}: IButton) {
   return (
     <>
       <button
@@ -17,6 +23,7 @@ export default function Button({ children, className, disabled }: IButton) {
             : "cursor-pointer bg-white",
           className
         )}
+        onClick={onClick}
       >
         {children}
       </button>
