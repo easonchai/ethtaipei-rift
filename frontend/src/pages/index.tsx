@@ -134,7 +134,6 @@ export default function Home() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setIsOpen(true);
       setTimeout(() => {
         setIsDone(true);
