@@ -19,3 +19,40 @@ The end result is a smooth, seamless and totally gas free experience for the end
 ## Links
 
 Canva: https://www.canva.com/design/DAGAY_woLUg/-t_omMThyy3dvW5bFdYcHg/watch?utm_content=DAGAY_woLUg&utm_campaign=designshare&utm_medium=link&utm_source=editor
+
+## Bounties Targeted
+
+🏆 Circle
+
+- Supporting USDC tokens
+
+🏆 Optimism
+
+- Deployed on Optimism
+  P.S. We have a snake game!
+
+🏆 Polygon
+
+- Deployed on Polygon Cardona
+
+🏆 Scroll
+
+- Deployed on Scroll Sepolia
+
+🏆 Ten Protocol
+
+- Deployed on Ten Protocol
+
+🏆 ThunderCore
+
+- Deployed on ThunderCore
+
+🏆 Zircuit
+
+- Deployed on Zircuit
+
+🏆 Linea
+
+- Deployed on Linea
+  https://goerli.lineascan.build/address/0xaa68184b36016d7c6cd7675940ee42aa5c7686d4
+  P.S. We have a frog easter egg 😉
