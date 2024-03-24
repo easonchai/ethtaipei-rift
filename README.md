@@ -18,6 +18,7 @@ The end result is a smooth, seamless and totally gas free experience for the end
 
 ## Links
 
+Demo: https://rift-easonchai.vercel.app/
 Canva: https://www.canva.com/design/DAGAY_woLUg/-t_omMThyy3dvW5bFdYcHg/watch?utm_content=DAGAY_woLUg&utm_campaign=designshare&utm_medium=link&utm_source=editor
 
 ## Bounties Targeted
@@ -29,15 +30,29 @@ Canva: https://www.canva.com/design/DAGAY_woLUg/-t_omMThyy3dvW5bFdYcHg/watch?utm
 🏆 Optimism
 
 - Deployed on Optimism
+  https://sepolia-optimism.etherscan.io/address/0x1e16706e2892e7b67e0836852ebf8e4cc5e84581
   P.S. We have a snake game!
 
 🏆 Polygon
 
 - Deployed on Polygon Cardona
+  https://cardona-zkevm.polygonscan.com/address/0xaa68184b36016d7c6cd7675940ee42aa5c7686d4
 
 🏆 Scroll
 
 - Deployed on Scroll Sepolia
+  https://sepolia.scrollscan.com/address/0x793e1b0c10db1ee27f53ef7a577ab90b467dafcf
+
+🏆 Zircuit
+
+- Deployed on Zircuit
+  https://explorer.zircuit.com/address/0xbB630615b0B0146F4FcA931Eab144a0d49F7176f
+
+🏆 Linea
+
+- Deployed on Linea
+  https://goerli.lineascan.build/address/0xaa68184b36016d7c6cd7675940ee42aa5c7686d4
+  P.S. We have a frog easter egg 😉
 
 🏆 Ten Protocol
 
@@ -46,13 +61,3 @@ Canva: https://www.canva.com/design/DAGAY_woLUg/-t_omMThyy3dvW5bFdYcHg/watch?utm
 🏆 ThunderCore
 
 - Deployed on ThunderCore
-
-🏆 Zircuit
-
-- Deployed on Zircuit
-
-🏆 Linea
-
-- Deployed on Linea
-  https://goerli.lineascan.build/address/0xaa68184b36016d7c6cd7675940ee42aa5c7686d4
-  P.S. We have a frog easter egg 😉
