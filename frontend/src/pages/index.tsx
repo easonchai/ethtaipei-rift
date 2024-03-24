@@ -38,6 +38,7 @@ export default function Home() {
   const [destinationChain, setDestinationChain] = useState(networks[1]);
   const [selectedProvider, setSelectedProvider] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const { data, signTypedData } = useSignTypedData();
   const { address } = useAccount();
 
@@ -135,6 +136,9 @@ export default function Home() {
     if (data) {
       setIsOpen(true);
     }
+    setTimeout(() => {
+      setIsDone(true);
+    }, 10000);
   }, [data]);
 
   useEffect(() => {
@@ -351,6 +355,7 @@ export default function Home() {
               providers?.find((provider) => provider.name === selectedProvider)
                 ?.time
             }
+            done={isDone}
           />
         )}
       </main>
