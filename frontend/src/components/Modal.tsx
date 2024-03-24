@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 const Snake = dynamic(() => import("@/components/Snake"), {
   ssr: false,

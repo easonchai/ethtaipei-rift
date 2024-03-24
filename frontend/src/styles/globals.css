@@ -37,7 +37,6 @@ body {
 }
 
 .game-border {
-  border: 2px solid #141400;
   margin: auto;
   display: flex;
   flex-direction: row;

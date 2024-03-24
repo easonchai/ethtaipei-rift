@@ -78,7 +78,7 @@ const Snake: React.FC<Props> = (props) => {
   useEffect(() => {
     //determine relative dimensions of game portal
     if (width >= 800) {
-      setDim(width * 0.35);
+      setDim(width * 0.25);
     } else if (width < 800) {
       setDim(width * 0.9);
     }
@@ -244,7 +244,10 @@ const Snake: React.FC<Props> = (props) => {
   }, [turn, width, dim, chunk, snake, direction, points, fruit, game]);
 
   return (
-    <div className="snake-container" id="snake-container">
+    <div
+      className="snake-container border-2 border-rift-grey-900"
+      id="snake-container"
+    >
       <div
         className="game-border"
         style={{
