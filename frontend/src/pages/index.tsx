@@ -298,7 +298,10 @@ export default function Home() {
           </div>
         </div>
 
-        <Button disabled={!receiveAmount} onClick={bridge}>
+        <Button
+          disabled={!receiveAmount || Number(receiveAmount) < 1}
+          onClick={bridge}
+        >
           Bridge
         </Button>
         {isOpen && (
