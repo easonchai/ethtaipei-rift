@@ -135,10 +135,10 @@ export default function Home() {
   useEffect(() => {
     if (data) {
       setIsOpen(true);
+      setTimeout(() => {
+        setIsDone(true);
+      }, 10000);
     }
-    setTimeout(() => {
-      setIsDone(true);
-    }, 10000);
   }, [data]);
 
   useEffect(() => {
