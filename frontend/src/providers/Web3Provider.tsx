@@ -1,12 +1,71 @@
 import { WagmiProvider, createConfig, http } from "wagmi";
-import { mainnet } from "wagmi/chains";
+import {
+  baseSepolia,
+  lineaTestnet,
+  mainnet,
+  optimismSepolia,
+  polygonZkEvmTestnet,
+  scrollTestnet,
+  sepolia,
+  thunderTestnet,
+} from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 
 const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
-    chains: [mainnet],
+    chains: [
+      sepolia,
+      lineaTestnet,
+      optimismSepolia,
+      polygonZkEvmTestnet,
+      scrollTestnet,
+      {
+        id: 443,
+        name: "Ten Protocol",
+        nativeCurrency: {
+          name: "Ethereum",
+          decimals: 18,
+          symbol: "ETH",
+        },
+        rpcUrls: {
+          default: {
+            http: [
+              `https://testnet.ten.xyz/v1/?token=7f1fd2d40fbe7d25e96b5d69429569291572232c`,
+            ],
+          },
+        },
+      },
+      {
+        id: 18,
+        name: "ThunderCore",
+        nativeCurrency: {
+          name: "Ethereum",
+          decimals: 18,
+          symbol: "ETH",
+        },
+        rpcUrls: {
+          default: {
+            http: [`https://testnet-rpc.thundercore.com`],
+          },
+        },
+      },
+      {
+        id: 48899,
+        name: "Zircuit",
+        nativeCurrency: {
+          name: "Ethereum",
+          decimals: 18,
+          symbol: "ETH",
+        },
+        rpcUrls: {
+          default: {
+            http: [`https://zircuit1.p2pify.com/`],
+          },
+        },
+      },
+    ],
     transports: {
       // RPC URL for each chain
       [mainnet.id]: http(
