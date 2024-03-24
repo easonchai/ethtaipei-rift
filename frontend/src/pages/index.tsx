@@ -9,6 +9,7 @@ import Head from "next/head";
 import Modal from "@/components/Modal";
 import { ethers } from "ethers";
 import { useDebounce } from "use-debounce";
+import { useSignTypedData, useAccount } from "wagmi";
 
 const networks = [
   "Ethereum Mainnet",
@@ -37,6 +38,8 @@ export default function Home() {
   const [destinationChain, setDestinationChain] = useState(networks[1]);
   const [selectedProvider, setSelectedProvider] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
+  const { data, signTypedData } = useSignTypedData();
+  const { address } = useAccount();
 
   const randomNumber = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -78,11 +81,13 @@ export default function Home() {
     for (const provider of providers) {
       const fee = randomNumber(feeData.min, feeData.max);
       const sla = randomNumber(1, 300);
-      const quote = ethers.parseEther(amount) - ethers.parseEther(`${fee}`);
+      const quote = ethers.utils
+        .parseEther(amount)
+        .sub(ethers.utils.parseEther(`${fee}`));
       data.push({
         name: provider,
         time: sla,
-        receiveAmount: quote < 0 ? "0" : quote.toString(),
+        receiveAmount: quote.lt(0) ? "0" : quote.toString(),
       });
     }
 
@@ -95,8 +100,42 @@ export default function Home() {
   };
 
   const bridge = () => {
-    setIsOpen(true);
+    signTypedData({
+      types: {
+        Sender: [
+          { name: "name", type: "string" },
+          { name: "wallet", type: "address" },
+        ],
+        BridgeRequest: [
+          { name: "from", type: "Sender" },
+          { name: "to", type: "Sender" },
+          { name: "token", type: "address" },
+          { name: "amount", type: "uint256" },
+          { name: "expiryTime", type: "uint256" },
+        ],
+      },
+      primaryType: "BridgeRequest",
+      message: {
+        from: {
+          name: "Sender",
+          wallet: address!,
+        },
+        to: {
+          name: "Provider",
+          wallet: "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+        },
+        token: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        amount: ethers.utils.parseEther(amount).toBigInt(),
+        expiryTime: BigInt(Math.floor(Date.now() / 1000) + 60 * 60),
+      },
+    });
   };
+
+  useEffect(() => {
+    if (data) {
+      setIsOpen(true);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (providers) {
